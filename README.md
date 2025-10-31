@@ -3,8 +3,11 @@ ROS MELODIC BASED JESTSON NANO AUTONOMOUS ROBOT
 
 # Build the Package
 cd ~/catkin_ws
+
 catkin_make
+
 source devel/setup.bash
+
 
 Testing - Display Robot in RViz Only
 To view the robot model in RViz without Gazebo:
@@ -13,7 +16,9 @@ This will open RViz with your robot model. You can use the joint_state_publisher
 
 Testing - Gazebo Simulation
 To launch the robot in Gazebo:
-bashroslaunch articubot_one gazebo.launch
+
+roslaunch articubot_one gazebo.launch
+
 This will:
 
 Start Gazebo with your robot spawned
@@ -23,10 +28,13 @@ Enable the differential drive controller
 Teleop Control
 In a new terminal, run teleop_twist_keyboard:
 bash# Install if not already installed
+
 sudo apt-get install ros-melodic-teleop-twist-keyboard
 
 # Run teleop
+
 rosrun teleop_twist_keyboard teleop_twist_keyboard.py
+
 Controls:
 
 i - Forward
@@ -40,7 +48,9 @@ e/c - Increase/decrease only angular speed
 
 View in RViz with Gazebo Running
 While Gazebo is running, open RViz in a new terminal:
-bashrosrun rviz rviz
+
+rosrun rviz rviz
+
 Then:
 
 Set Fixed Frame to odom
