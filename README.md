@@ -1,59 +1,75 @@
-# BOT
-ROS MELODIC BASED JESTSON NANO AUTONOMOUS ROBOT
+# BOT — ArticuBot One (Jetson Nano, ROS Melodic)
 
-# Build the Package
+Lightweight guide to build, run and visualize the ArticuBot One robot (ROS Melodic). Includes instructions for displaying the URDF model in RViz, running a Gazebo simulation, and teleoperation.
+
+## Features
+- Visualize robot model in RViz
+- Run full Gazebo simulation with controllers
+- Teleoperate using keyboard commands
+
+## Prerequisites
+- Ubuntu + ROS Melodic installed
+- catkin workspace at ~/catkin_ws
+- (Optional) Gazebo and rviz installed
+- On Jetson Nano: follow NVIDIA Jetson setup for ROS Melodic if needed
+
+## Build
+Open a terminal and run:
+```bash
 cd ~/catkin_ws
-
 catkin_make
+source ~/catkin_ws/devel/setup.bash
+```
 
-source devel/setup.bash
+## Quick: Display robot in RViz (no Gazebo)
+To view only the robot model in RViz:
+```bash
+roslaunch articubot_one display.launch
+```
+- RViz will open with the robot model.
+- Use the joint_state_publisher GUI to move joints manually.
 
-
-Testing - Display Robot in RViz Only
-To view the robot model in RViz without Gazebo:
-bashroslaunch articubot_one display.launch
-This will open RViz with your robot model. You can use the joint_state_publisher GUI to manually move the wheels.
-
-Testing - Gazebo Simulation
-To launch the robot in Gazebo:
-
+## Full Simulation in Gazebo
+Launch Gazebo with the robot and controllers:
+```bash
 roslaunch articubot_one gazebo.launch
-
+```
 This will:
+- Start Gazebo and spawn the robot
+- Start robot_state_publisher (TF transforms)
+- Enable the differential drive controller
 
-Start Gazebo with your robot spawned
-Start robot_state_publisher for TF transforms
-Enable the differential drive controller
-
-Teleop Control
-In a new terminal, run teleop_twist_keyboard:
-bash# Install if not already installed
-
+## Teleoperation (keyboard)
+Install teleop package (if needed) and run:
+```bash
 sudo apt-get install ros-melodic-teleop-twist-keyboard
-
-# Run teleop
-
 rosrun teleop_twist_keyboard teleop_twist_keyboard.py
-
+```
 Controls:
+- i — Forward
+- , — Backward
+- j — Turn left
+- l — Turn right
+- k — Stop
+- q / z — Increase / decrease max speeds
+- w / x — Increase / decrease linear speed only
+- e / c — Increase / decrease angular speed only
 
-i - Forward
-, - Backward
-j - Turn Left
-l - Turn Right
-k - Stop
-q/z - Increase/decrease max speeds
-w/x - Increase/decrease only linear speed
-e/c - Increase/decrease only angular speed
-
-View in RViz with Gazebo Running
-While Gazebo is running, open RViz in a new terminal:
-
+## View in RViz while Gazebo is running
+Open RViz:
+```bash
 rosrun rviz rviz
+```
+Recommended displays:
+- Fixed Frame: odom
+- RobotModel
+- TF
+- (Optional) Odometry — topic: /odom
 
-Then:
+## Troubleshooting
+- If RViz shows no model: ensure your URDF is published and robot_state_publisher is running.
+- If controllers don't start: check controller_manager and rostopic list for expected topics.
+- If permissions or network issues occur when connecting to a remote Gazebo/ROS master, verify ROS_MASTER_URI and ROS_HOSTNAME.
 
-Set Fixed Frame to odom
-Add RobotModel display
-Add TF display
-Optionally add Odometry display (topic: /odom)
+## License
+Include your preferred license here (e.g., MIT, Apache-2.0).
