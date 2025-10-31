@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro"  name="articubot_one">
+
+    <xacro:include filename="$(find articubot_one)/urdf/robot_core.xacro" />
+    <xacro:include filename="$(find articubot_one)/urdf/gazebo_control.xacro" />
+    
+</robot>

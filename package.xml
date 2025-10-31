@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>articubot_one</name>
+  <version>0.0.1</version>
+  <description>Differential drive robot package for ROS Melodic with Gazebo simulation</description>
+  
+  <maintainer email="your_email@example.com">Your Name</maintainer>
+  
+  <license>MIT</license>
+  
+  <url type="website">http://wiki.ros.org/articubot_one</url>
+  
+  <author email="your_email@example.com">Your Name</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <!-- Core ROS dependencies -->
+  <depend>rospy</depend>
+  <depend>roscpp</depend>
+  <depend>std_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>nav_msgs</depend>
+  <depend>tf</depend>
+  
+  <!-- URDF and robot description -->
+  <depend>urdf</depend>
+  <depend>xacro</depend>
+  <depend>robot_state_publisher</depend>
+  <depend>joint_state_publisher</depend>
+  <depend>joint_state_publisher_gui</depend>
+  
+  <!-- Gazebo simulation -->
+  <depend>gazebo_ros</depend>
+  <depend>gazebo_plugins</depend>
+  
+  <!-- Optional but recommended for development -->
+  <exec_depend>rviz</exec_depend>
+  
+  <!-- Export Gazebo paths -->
+  <export>
+    <gazebo_ros plugin_path="${prefix}/lib" gazebo_media_path="${prefix}" />
+  </export>
+
+</package>

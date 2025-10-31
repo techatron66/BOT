@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!-- Load the URDF into the ROS Parameter Server -->
+    <param name="robot_description" command="$(find xacro)/xacro '$(find articubot_one)/urdf/robot.urdf.xacro'" />
+
+    <!-- Start robot state publisher -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+    <!-- Start joint state publisher GUI for manual control -->
+    <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" />
+
+    <!-- Start RViz with a configuration file -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find articubot_one)/rviz/robot_view.rviz" required="true" />
+
+</launch>
