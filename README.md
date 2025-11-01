@@ -107,6 +107,57 @@ The camera publishes to `/camera/image_raw` at 30 Hz with 640x480 resolution. Vi
 rosrun image_view image_view image:=/camera/image_raw
 ```
 
+### SLAM and Navigation
+
+Install required packages:
+```bash
+sudo apt-get update
+sudo apt-get install -y ros-melodic-gmapping ros-melodic-navigation ros-melodic-map-server ros-melodic-amcl
+```
+
+1. Start mapping (teleop)
+- Terminal 1 — launch mapping:
+```bash
+roslaunch articubot_one mapping_teleop.launch
+```
+- Terminal 2 — teleop control:
+```bash
+rosrun teleop_twist_keyboard teleop_twist_keyboard.py
+```
+Drive the robot slowly to build the map.
+
+2. Save the map
+```bash
+mkdir -p ~/catkin_ws/src/articubot_one/maps
+cd ~/catkin_ws/src/articubot_one/maps
+rosrun map_server map_saver -f my_map
+```
+This produces my_map.yaml and my_map.pgm in the maps directory.
+
+3. Navigate with the saved map
+```bash
+# If your navigation.launch accepts a map parameter:
+roslaunch articubot_one navigation.launch map:=/home/<user>/catkin_ws/src/articubot_one/maps/my_map.yaml
+
+# Or, if navigation.launch loads the package map internally:
+roslaunch articubot_one navigation.launch
+```
+In RViz:
+- Click "2D Pose Estimate" to set the robot's initial pose.
+- Click "2D Nav Goal" to send navigation goals.
+
+Optional — Autonomous exploration
+```bash
+sudo apt-get install -y ros-melodic-explore-lite
+roslaunch articubot_one explore_lite.launch
+```
+This will run autonomous exploration and mapping (ensure the robot has localization and a valid laser source).
+
+Notes
+- Adjust file paths above to match your home directory.
+- Ensure all required nodes (map_server, amcl, move_base, and robot_state_publisher) are launched by your navigation/launch files.
+- If mapping fails, verify TF frames and laser topic names (e.g., /scan).
+
 ## Useful Commands
 
 ### Diagnostics

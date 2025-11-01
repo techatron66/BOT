@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!-- Launch Gazebo with robot -->
+    <include file="$(find articubot_one)/launch/gazebo_full.launch"/>
+
+    <!-- Launch Gmapping SLAM -->
+    <include file="$(find articubot_one)/launch/slam_gmapping.launch"/>
+
+    <!-- Launch RViz with mapping configuration -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find articubot_one)/rviz/mapping.rviz" required="false"/>
+
+</launch>

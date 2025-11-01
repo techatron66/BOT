@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- Move Base Node -->
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    
+    <!-- Load parameters -->
+    <rosparam file="$(find articubot_one)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find articubot_one)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find articubot_one)/config/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find articubot_one)/config/global_costmap_params.yaml" command="load" />
+    <rosparam file="$(find articubot_one)/config/base_local_planner_params.yaml" command="load" />
+    
+    <!-- Global planner -->
+    <param name="base_global_planner" value="navfn/NavfnROS" />
+    
+    <!-- Local planner -->
+    <param name="base_local_planner" value="base_local_planner/TrajectoryPlannerROS"/>
+    
+    <!-- Recovery behaviors -->
+    <param name="recovery_behavior_enabled" value="true" />
+    
+    <!-- Planner patience -->
+    <param name="planner_patience" value="5.0" />
+    <param name="controller_patience" value="15.0" />
+    
+    <!-- Conservative reset distance -->
+    <param name="conservative_reset_dist" value="3.0" />
+    
+    <!-- Oscillation timeout -->
+    <param name="oscillation_timeout" value="10.0" />
+    <param name="oscillation_distance" value="0.2" />
+    
+  </node>
+
+</launch>
