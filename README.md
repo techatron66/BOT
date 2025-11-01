@@ -80,6 +80,11 @@ roslaunch articubot_one display.launch
 roslaunch articubot_one gazebo_with_lidar.launch
 ```
 
+### Launch Gazebo Simulation with LIDAR and Camera
+```bash
+roslaunch articubot_one gazebo_with_camera.launch
+```
+
 ### Teleop Control
 ```bash
 sudo apt-get install ros-melodic-teleop-twist-keyboard
@@ -95,6 +100,12 @@ rosrun teleop_twist_keyboard teleop_twist_keyboard.py
 - `q/z` - Increase/decrease speeds
 - `w/x` - Adjust linear speed
 - `e/c` - Adjust angular speed
+
+### Camera View
+The camera publishes to `/camera/image_raw` at 30 Hz with 640x480 resolution. View the camera feed with:
+```bash
+rosrun image_view image_view image:=/camera/image_raw
+```
 
 ## Useful Commands
 

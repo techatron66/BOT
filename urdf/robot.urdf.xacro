@@ -3,5 +3,7 @@
 
     <xacro:include filename="$(find articubot_one)/urdf/robot_core.xacro" />
     <xacro:include filename="$(find articubot_one)/urdf/gazebo_control.xacro" />
+    <xacro:include filename="$(find articubot_one)/urdf/lidar.xacro" />
+    <xacro:include filename="$(find articubot_one)/urdf/camera.xacro" />
     
 </robot>
