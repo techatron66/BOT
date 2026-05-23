@@ -1,7 +1,22 @@
+# ============================================================
+# Global Costmap Parameters
+# Static map + obstacle updates for global path planning
+# ============================================================
+
 global_costmap:
   global_frame: map
   robot_base_frame: base_link
-  update_frequency: 1.0
-  publish_frequency: 0.5
-  static_map: true
-  transform_tolerance: 0.5
+
+  update_frequency: 1.0             # Hz - lower for CPU savings
+  publish_frequency: 0.5            # Hz
+
+  static_map: true                  # Use saved map from map_server
+  rolling_window: false
+
+  resolution: 0.05                 # Match map resolution
+
+  # Plugins - static map first, then obstacles, then inflation
+  plugins:
+    - {name: static_layer, type: "costmap_2d::StaticLayer"}
+    - {name: obstacle_layer, type: "costmap_2d::ObstacleLayer"}
+    - {name: inflation_layer, type: "costmap_2d::InflationLayer"}

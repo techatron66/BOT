@@ -1,0 +1,86 @@
+# ============================================================
+# GMapping SLAM Parameters
+# Translated from ROS2 SLAM Toolbox logic for ROS1 Melodic
+# Optimized for differential drive + LIDAR on Edge AI (Jetson)
+# ============================================================
+
+# LIDAR scan topic
+scan_topic: scan
+
+# Base frame
+base_frame: base_link
+
+# Odometry frame
+odom_frame: odom
+
+# Map frame
+map_frame: map
+
+# Map update interval (seconds) - lower = more responsive but more CPU
+map_update_interval: 2.0
+
+# Maximum usable range of the LIDAR (meters)
+maxUrange: 6.0
+maxRange: 8.0
+
+# Minimum score for scan matching
+minimumScore: 50
+
+# Linear and angular update thresholds
+linearUpdate: 0.2
+angularUpdate: 0.1
+temporalUpdate: 0.5
+
+# Particles for Monte Carlo localization
+particles: 80
+
+# Initial map dimensions (will auto-expand)
+xmin: -10.0
+ymin: -10.0
+xmax: 10.0
+ymax: 10.0
+delta: 0.05
+
+# Odometry error model (adjust based on your robot)
+srr: 0.1    # linear error from linear motion
+stt: 0.2    # angular error from angular motion
+srt: 0.1    # linear error from angular motion
+str: 0.1    # angular error from linear motion
+
+# Laser scan matching parameters
+lsigma: 0.075
+ogain: 3.0
+lskip: 0
+
+# Kernel size for map updates
+kernelSize: 1
+
+# Step size for scan matching
+lstep: 0.05
+astep: 0.05
+
+# Number of iterations for scan matching
+iterations: 5
+
+# Sigma for likelihood computation
+sigma: 0.05
+
+# Translational and rotational sampling range for scan matching
+# (higher = more robust but slower)
+# For Jetson Nano, keep these moderate
+xrange: 0.5
+yrange: 0.5
+
+# Publish tf transforms
+transform_publish_period: 0.05
+
+# Use scan matching
+use_scan_matching: true
+use_scan_barycenter: true
+
+# Adaptive resampling threshold
+resampleThreshold: 0.5
+
+# Minimum travel distance and rotation before processing a scan
+minimum_travel_distance: 0.2
+minimum_travel_heading: 0.1

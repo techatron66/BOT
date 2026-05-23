@@ -1,19 +1,47 @@
-obstacle_range: 5.5
-raytrace_range: 6.0
+# ============================================================
+# Costmap Common Parameters (Shared by Global & Local Costmaps)
+# Translated from ROS2 nav2_params.yaml -> ROS1 Melodic
+# ============================================================
 
-footprint: [[-0.2, -0.175], [-0.2, 0.175], [0.2, 0.175], [0.2, -0.175]]
-#robot_radius: 0.22  # Use footprint instead
+# Robot footprint - rectangular approximation
+# Measure your robot and update these values!
+# Format: [[x1,y1], [x2,y2], ...] in meters from center
+# Based on reference: robot_radius ~0.22m (diameter ~0.44m)
+# Using a 0.25m x 0.30m rectangle as conservative estimate
+footprint: [[0.15, 0.12], [0.15, -0.12], [-0.15, -0.12], [-0.15, 0.12]]
 
-inflation_radius: 0.4
-cost_scaling_factor: 3.0
+# Alternative: circular robot (uncomment if using round base)
+# robot_radius: 0.22
 
-map_type: costmap
+# Inflation Layer - CRITICAL for obstacle avoidance
+# inflation_radius must be > robot radius to prevent wall-hitting
+inflation_layer:
+  enabled: true
+  cost_scaling_factor: 3.0      # Lower = wider decay curve
+  inflation_radius: 0.70          # Buffer around obstacles (meters)
 
-observation_sources: laser_scan_sensor
+# Obstacle Layer - processes LIDAR data
+obstacle_layer:
+  enabled: true
+  combination_method: 1
+  track_unknown_space: true
+  obstacle_range: 3.0             # Max distance to mark obstacles (m)
+  raytrace_range: 4.0              # Max distance to clear obstacles (m)
 
-laser_scan_sensor:
-  sensor_frame: laser_frame
-  data_type: LaserScan
-  topic: scan
-  marking: true
-  clearing: true
+  observation_sources: laser_scan_sensor
+
+  laser_scan_sensor:
+    sensor_frame: laser_link       # Match your URDF LIDAR frame
+    data_type: LaserScan
+    topic: /scan
+    marking: true                 # Mark obstacles from scan
+    clearing: true                # Clear free space (ESSENTIAL!)
+    min_obstacle_height: -0.1
+    max_obstacle_height: 0.5
+    inf_is_valid: true
+
+# Static Map Layer (used by global costmap)
+static_layer:
+  enabled: true
+  map_topic: /map
+  subscribe_to_updates: true

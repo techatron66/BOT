@@ -1,0 +1,55 @@
+# ============================================================
+# DWA Local Planner Parameters
+# Translated from ROS2 DWB -> ROS1 DWAPlannerROS
+# Optimized for differential drive on Jetson Nano
+# ============================================================
+
+DWAPlannerROS:
+  # Robot Configuration
+  max_vel_x: 0.50                  # Max forward speed (m/s)
+  min_vel_x: 0.0                  # No reverse (differential drive)
+
+  max_vel_y: 0.0                  # No Y velocity (diff drive)
+  min_vel_y: 0.0
+
+  max_vel_trans: 0.50             # Max translational speed
+  min_vel_trans: 0.05             # Min to prevent stalling
+
+  max_vel_theta: 1.0               # Max rotation speed (rad/s)
+  min_vel_theta: -1.0
+
+  # Acceleration Limits
+  acc_lim_x: 2.5                   # m/s^2
+  acc_lim_y: 0.0
+  acc_lim_theta: 3.2               # rad/s^2
+
+  # Goal Tolerances
+  xy_goal_tolerance: 0.20          # meters
+  yaw_goal_tolerance: 0.25         # radians (~14 degrees)
+  latch_xy_goal_tolerance: false
+
+  # Forward Simulation
+  sim_time: 1.5                   # seconds to simulate ahead
+  vx_samples: 6                    # X velocity samples
+  vy_samples: 1                    # Y velocity (1 for diff drive)
+  vtheta_samples: 20               # Angular velocity samples
+
+  # Trajectory Scoring Weights
+  # Higher = more important
+  path_distance_bias: 32.0         # Stay close to global path
+  goal_distance_bias: 24.0          # Move toward goal
+  occdist_scale: 0.02              # OBSTACLE AVOIDANCE - increase if hitting walls!
+
+  # Forward Point Distance for path/goal alignment
+  forward_point_distance: 0.325    # meters ahead to look
+
+  # Costmap interaction
+  prune_plan: false                # Keep full path for reference
+
+  # Oscillation prevention
+  oscillation_reset_dist: 0.05
+  oscillation_reset_angle: 0.2
+
+  # Debugging
+  publish_traj_pc: true            # Publish trajectory pointcloud
+  publish_cost_grid_pc: false      # Heavy on CPU - disable for Jetson

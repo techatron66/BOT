@@ -1,0 +1,38 @@
+# ============================================================
+# Move Base Parameters
+# Master navigation stack configuration
+# ============================================================
+
+shutdown_costmaps: false
+
+# Controller frequency - how often local planner runs
+controller_frequency: 10.0          # Hz
+controller_patience: 3.0            # seconds before recovery
+
+# Planner frequency
+planner_frequency: 1.0              # Hz
+planner_patience: 5.0
+
+# Oscillation detection
+oscillation_timeout: 10.0
+oscillation_distance: 0.2
+
+# Recovery behaviors
+recovery_behavior_enabled: true
+clearing_rotation_allowed: true
+
+# Recovery behavior sequence
+recovery_behaviors:
+  - name: 'conservative_reset'
+    type: 'clear_costmap_recovery/ClearCostmapRecovery'
+  - name: 'rotate_recovery'
+    type: 'rotate_recovery/RotateRecovery'
+  - name: 'aggressive_reset'
+    type: 'clear_costmap_recovery/ClearCostmapRecovery'
+
+# Recovery parameters
+conservative_reset:
+  reset_distance: 3.0
+
+aggressive_reset:
+  reset_distance: 1.0
