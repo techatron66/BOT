@@ -36,28 +36,8 @@ Visualization Manager:
       Color Scheme: map
       Draw Behind: false
       Enabled: true
-      Name: Map
+      Name: SLAM Map
       Topic: /map
-      Unreliable: false
-      Use Timestamp: false
-      Value: true
-    - Alpha: 0.7
-      Class: rviz/Map
-      Color Scheme: costmap
-      Draw Behind: false
-      Enabled: true
-      Name: Global Costmap
-      Topic: /move_base/global_costmap/costmap
-      Unreliable: false
-      Use Timestamp: false
-      Value: true
-    - Alpha: 0.7
-      Class: rviz/Map
-      Color Scheme: costmap
-      Draw Behind: false
-      Enabled: true
-      Name: Local Costmap
-      Topic: /move_base/local_costmap/costmap
       Unreliable: false
       Use Timestamp: false
       Value: true
@@ -89,81 +69,6 @@ Visualization Manager:
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
-    - Alpha: 1
-      Buffer Length: 1
-      Class: rviz/Path
-      Color: 25; 255; 0
-      Enabled: true
-      Head Diameter: 0.3
-      Head Length: 0.2
-      Length: 0.3
-      Line Style: Lines
-      Line Width: 0.03
-      Name: Global Plan
-      Offset:
-        X: 0
-        Y: 0
-        Z: 0
-      Pose Color: 255; 85; 255
-      Pose Style: None
-      Radius: 0.03
-      Shaft Diameter: 0.1
-      Shaft Length: 0.1
-      Topic: /move_base/GlobalPlanner/plan
-      Unreliable: false
-      Value: true
-    - Alpha: 1
-      Buffer Length: 1
-      Class: rviz/Path
-      Color: 255; 0; 0
-      Enabled: true
-      Head Diameter: 0.3
-      Head Length: 0.2
-      Length: 0.3
-      Line Style: Lines
-      Line Width: 0.03
-      Name: Local Plan
-      Offset:
-        X: 0
-        Y: 0
-        Z: 0
-      Pose Color: 255; 85; 255
-      Pose Style: None
-      Radius: 0.03
-      Shaft Diameter: 0.1
-      Shaft Length: 0.1
-      Topic: /move_base/DWAPlannerROS/local_plan
-      Unreliable: false
-      Value: true
-    - Alpha: 1
-      Arrow Length: 0.5
-      Axes Length: 0.5
-      Axes Radius: 0.05
-      Class: rviz/PoseArray
-      Color: 255; 25; 0
-      Enabled: true
-      Head Length: 0.3
-      Head Radius: 0.1
-      Name: Particle Cloud
-      Shaft Length: 0.5
-      Shaft Radius: 0.05
-      Shape: Arrow (Flat)
-      Topic: /particlecloud
-      Unreliable: false
-      Value: true
-    - Alpha: 1
-      Class: rviz/Pose
-      Color: 0; 25; 255
-      Enabled: true
-      Head Length: 0.3
-      Head Radius: 0.1
-      Name: Current Goal
-      Shaft Length: 0.5
-      Shaft Radius: 0.05
-      Shape: Arrow
-      Topic: /move_base/current_goal
-      Unreliable: false
-      Value: true
     - Class: rviz/TF
       Enabled: true
       Frame Timeout: 15
@@ -192,10 +97,6 @@ Visualization Manager:
     - Class: rviz/Select
     - Class: rviz/FocusCamera
     - Class: rviz/Measure
-    - Class: rviz/SetInitialPose
-      Topic: /initialpose
-    - Class: rviz/SetGoal
-      Topic: /move_base_simple/goal
     - Class: rviz/PublishPoint
       Single click: true
       Topic: /clicked_point
