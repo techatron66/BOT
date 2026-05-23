@@ -1,24 +1,81 @@
-<?xml version="1.0"?>
 <launch>
+  <!-- ========================================================== -->
+  <!-- Master Navigation Launch File                                  -->
+  <!-- Brings up: map_server, AMCL, move_base (with all planners)     -->
+  <!-- Usage: roslaunch articubot_one navigation.launch map:=/path    -->
+  <!-- ========================================================== -->
 
   <!-- Arguments -->
-  <arg name="map_file" default="$(find articubot_one)/maps/my_map.yaml"/>
+  <arg name="map" default="$(find articubot_one)/maps/my_map.yaml"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="open_rviz" default="true"/>
+  <arg name="initial_pose_x" default="0.0"/>
+  <arg name="initial_pose_y" default="0.0"/>
+  <arg name="initial_pose_a" default="0.0"/>
 
-  <!-- Launch Gazebo with robot -->
-  <include file="$(find articubot_one)/launch/gazebo_full.launch"/>
+  <!-- Set use_sim_time -->
+  <param name="/use_sim_time" value="$(arg use_sim_time)"/>
 
-  <!-- Map Server -->
-  <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)">
+  <!-- 1. Map Server - loads the saved map from SLAM -->
+  <node pkg="map_server" type="map_server" name="map_server" 
+        args="$(arg map)" output="screen">
     <param name="frame_id" value="map"/>
   </node>
 
-  <!-- AMCL Localization -->
-  <include file="$(find articubot_one)/launch/amcl.launch"/>
+  <!-- 2. AMCL Localization -->
+  <include file="$(find articubot_one)/launch/amcl.launch">
+    <arg name="initial_pose_x" value="$(arg initial_pose_x)"/>
+    <arg name="initial_pose_y" value="$(arg initial_pose_y)"/>
+    <arg name="initial_pose_a" value="$(arg initial_pose_a)"/>
+  </include>
 
-  <!-- Move Base -->
-  <include file="$(find articubot_one)/launch/move_base.launch"/>
+  <!-- 3. Move Base - Navigation Stack Core -->
+  <node pkg="move_base" type="move_base" name="move_base" output="screen">
 
-  <!-- RViz -->
-  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find articubot_one)/rviz/navigation.rviz" required="false"/>
+    <!-- Load common params into both namespaces -->
+    <rosparam file="$(find articubot_one)/config/costmap_common_params.yaml" 
+              command="load" ns="global_costmap"/>
+    <rosparam file="$(find articubot_one)/config/costmap_common_params.yaml" 
+              command="load" ns="local_costmap"/>
+
+    <!-- Load costmap-specific params -->
+    <rosparam file="$(find articubot_one)/config/global_costmap_params.yaml" 
+              command="load"/>
+    <rosparam file="$(find articubot_one)/config/local_costmap_params.yaml" 
+              command="load"/>
+
+    <!-- Load move_base params -->
+    <rosparam file="$(find articubot_one)/config/move_base_params.yaml" 
+              command="load"/>
+
+    <!-- Load local planner params -->
+    <rosparam file="$(find articubot_one)/config/dwa_local_planner_params.yaml" 
+              command="load"/>
+
+    <!-- Planner selection -->
+    <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS"/>
+    <param name="base_global_planner" value="global_planner/GlobalPlanner"/>
+
+    <!-- Global planner params -->
+    <param name="GlobalPlanner/allow_unknown" value="true"/>
+    <param name="GlobalPlanner/default_tolerance" value="0.1"/>
+    <param name="GlobalPlanner/visualize_potential" value="false"/>
+    <param name="GlobalPlanner/use_dijkstra" value="true"/>
+    <param name="GlobalPlanner/use_quadratic" value="true"/>
+    <param name="GlobalPlanner/old_navfn_behavior" value="false"/>
+
+    <!-- Remappings -->
+    <remap from="cmd_vel" to="/cmd_vel"/>
+    <remap from="odom" to="/odom"/>
+    <remap from="scan" to="/scan"/>
+
+  </node>
+
+  <!-- 4. RViz with Navigation Configuration -->
+  <group if="$(arg open_rviz)">
+    <node pkg="rviz" type="rviz" name="rviz" 
+          args="-d $(find articubot_one)/rviz/navigation.rviz"
+          output="screen"/>
+  </group>
 
 </launch>

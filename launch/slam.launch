@@ -1,0 +1,33 @@
+<launch>
+  <!-- ========================================================== -->
+  <!-- SLAM (GMapping) Launch File                                  -->
+  <!-- Performs SLAM using LIDAR data in simulation or real robot   -->
+  <!-- ========================================================== -->
+
+  <arg name="use_sim_time" default="true"/>
+  <arg name="scan_topic" default="scan"/>
+  <arg name="base_frame" default="base_link"/>
+  <arg name="odom_frame" default="odom"/>
+  <arg name="map_frame" default="map"/>
+
+  <!-- Set use_sim_time -->
+  <param name="/use_sim_time" value="$(arg use_sim_time)"/>
+
+  <!-- If in simulation, include the sim launch to spawn robot -->
+  <!-- For real robot, comment this out and bring up your hardware -->
+  <!-- <include file="$(find articubot_one)/launch/sim_obstacles.launch"/> -->
+
+  <!-- GMapping Node -->
+  <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen">
+    <rosparam file="$(find articubot_one)/config/gmapping_params.yaml" command="load"/>
+    <remap from="scan" to="$(arg scan_topic)"/>
+    <param name="base_frame" value="$(arg base_frame)"/>
+    <param name="odom_frame" value="$(arg odom_frame)"/>
+    <param name="map_frame" value="$(arg map_frame)"/>
+  </node>
+
+  <!-- RViz with SLAM visualization -->
+  <node pkg="rviz" type="rviz" name="rviz" 
+        args="-d $(find articubot_one)/rviz/slam.rviz"/>
+
+</launch>

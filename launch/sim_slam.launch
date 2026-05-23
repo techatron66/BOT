@@ -1,0 +1,13 @@
+<launch>
+  <!-- ========================================================== -->
+  <!-- Combined Simulation + SLAM Launch                            -->
+  <!-- Spawns robot in obstacles.world and starts GMapping            -->
+  <!-- ========================================================== -->
+
+  <!-- Launch simulation with obstacles world -->
+  <include file="$(find articubot_one)/launch/sim_obstacles.launch"/>
+
+  <!-- Start SLAM -->
+  <include file="$(find articubot_one)/launch/slam.launch"/>
+
+</launch>
