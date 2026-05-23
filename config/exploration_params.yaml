@@ -1,0 +1,49 @@
+# ============================================================
+# Autonomous Exploration Parameters
+# For explore_lite with move_base integration
+# ============================================================
+
+# Explore Lite Parameters
+explore:
+  # Robot movement constraints
+  robot_base_frame: base_link
+
+  # Costmap topic to use for frontier detection
+  costmap_topic: /map
+  costmap_updates_topic: /map_updates
+
+  # Visualization
+  visualize: true
+
+  # Planner frequency
+  planner_frequency: 1.0
+
+  # Progress timeout
+  progress_timeout: 30.0
+
+  # Minimum frontier size (meters)
+  min_frontier_size: 0.5
+
+  # Potential scale (how much to prefer closer frontiers)
+  potential_scale: 3.0
+
+  # Orientation scale (how much to prefer frontiers with better orientation)
+  orientation_scale: 0.0
+
+  # Gain scale (how much to prefer frontiers with more unknown space)
+  gain_scale: 1.0
+
+  # Transform tolerance
+  transform_tolerance: 0.3
+
+# ============================================================
+# Frontier Exploration Alternative (using frontier_exploration)
+# ============================================================
+
+# If using frontier_exploration package:
+# frontier_exploration:
+#   frequency: 1.0
+#   goal_aliasing: 0.1
+#   resize_to_boundary: true
+#   explore_boundary:
+#     polygon: [[-10.0, -10.0], [-10.0, 10.0], [10.0, 10.0], [10.0, -10.0]]
